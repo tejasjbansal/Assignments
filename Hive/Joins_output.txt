@@ -1,0 +1,158 @@
+SELECT * FROM buck_users u LEFT OUTER JOIN buck_locations l
+    > ON u.id = l.id;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220415002057_826a1b44-8b18-49b2-999d-e78fe5b942b3
+Total jobs = 1
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/ubh01/apache-hive-2.3.2-bin/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/ubh01/hadoop-2.7.1/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+2022-04-15 00:21:01	Starting to launch local task to process map join;	maximum memory = 477626368
+2022-04-15 00:21:02	Dump the side-table for tag: 1 with group count: 6 into file: file:/tmp/ubh01/1261a800-33c3-460f-b827-2a8024b3948f/hive_2022-04-15_00-20-57_591_4165413577033752304-1/-local-10004/HashTable-Stage-3/MapJoin-mapfile01--.hashtable
+2022-04-15 00:21:02	Uploaded 1 File to: file:/tmp/ubh01/1261a800-33c3-460f-b827-2a8024b3948f/hive_2022-04-15_00-20-57_591_4165413577033752304-1/-local-10004/HashTable-Stage-3/MapJoin-mapfile01--.hashtable (405 bytes)
+2022-04-15 00:21:02	End of local task; Time Taken: 0.752 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1649832038027_0020, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0020/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0020
+Hadoop job information for Stage-3: number of mappers: 1; number of reducers: 0
+2022-04-15 00:21:06,478 Stage-3 map = 0%,  reduce = 0%
+2022-04-15 00:21:10,691 Stage-3 map = 100%,  reduce = 0%, Cumulative CPU 1.47 sec
+MapReduce Total cumulative CPU time: 1 seconds 470 msec
+Ended Job = job_1649832038027_0020
+MapReduce Jobs Launched: 
+Stage-Stage-3: Map: 1   Cumulative CPU: 1.47 sec   HDFS Read: 6586 HDFS Write: 299 SUCCESS
+Total MapReduce CPU Time Spent: 1 seconds 470 msec
+OK
+2	Sumit	200	DNA	2	BIHAR
+4	Sunil	500	FCS	4	AP
+6	Mahoor	200	FCS	6	GOA
+1	Amit	100	DNA	1	UP
+3	Yadav	300	DNA	3	MP
+5	Kranti	100	FCS	5	MAHARASHTRA
+Time taken: 15.224 seconds, Fetched: 6 row(s)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM buck_users u RIGHT OUTER JOIN buck_locations l
+    > ON u.id = l.id;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220415002302_d5eee518-fe32-4e3d-8e89-c4cd70c5af22
+Total jobs = 1
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/ubh01/apache-hive-2.3.2-bin/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/ubh01/hadoop-2.7.1/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+2022-04-15 00:23:06	Starting to launch local task to process map join;	maximum memory = 477626368
+2022-04-15 00:23:07	Dump the side-table for tag: 0 with group count: 6 into file: file:/tmp/ubh01/1261a800-33c3-460f-b827-2a8024b3948f/hive_2022-04-15_00-23-02_607_7127451671000248157-1/-local-10004/HashTable-Stage-3/MapJoin-mapfile10--.hashtable
+2022-04-15 00:23:07	Uploaded 1 File to: file:/tmp/ubh01/1261a800-33c3-460f-b827-2a8024b3948f/hive_2022-04-15_00-23-02_607_7127451671000248157-1/-local-10004/HashTable-Stage-3/MapJoin-mapfile10--.hashtable (447 bytes)
+2022-04-15 00:23:07	End of local task; Time Taken: 0.808 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1649832038027_0021, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0021/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0021
+Hadoop job information for Stage-3: number of mappers: 1; number of reducers: 0
+2022-04-15 00:23:12,627 Stage-3 map = 0%,  reduce = 0%
+2022-04-15 00:23:16,842 Stage-3 map = 100%,  reduce = 0%, Cumulative CPU 1.36 sec
+MapReduce Total cumulative CPU time: 1 seconds 360 msec
+Ended Job = job_1649832038027_0021
+MapReduce Jobs Launched: 
+Stage-Stage-3: Map: 1   Cumulative CPU: 1.36 sec   HDFS Read: 6434 HDFS Write: 299 SUCCESS
+Total MapReduce CPU Time Spent: 1 seconds 360 msec
+OK
+6	Mahoor	200	FCS	6	GOA
+4	Sunil	500	FCS	4	AP
+2	Sumit	200	DNA	2	BIHAR
+5	Kranti	100	FCS	5	MAHARASHTRA
+3	Yadav	300	DNA	3	MP
+1	Amit	100	DNA	1	UP
+Time taken: 15.328 seconds, Fetched: 6 row(s)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+SELECT * FROM buck_users u FULL OUTER JOIN buck_locations l
+    > ON u.id = l.id;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220415002444_813dc902-11f6-42f5-a72d-8b8467f131ed
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649832038027_0022, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0022/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0022
+Hadoop job information for Stage-1: number of mappers: 2; number of reducers: 1
+2022-04-15 00:24:50,679 Stage-1 map = 0%,  reduce = 0%
+2022-04-15 00:24:55,951 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.68 sec
+2022-04-15 00:25:00,160 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 4.15 sec
+MapReduce Total cumulative CPU time: 4 seconds 150 msec
+Ended Job = job_1649832038027_0022
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 2  Reduce: 1   Cumulative CPU: 4.15 sec   HDFS Read: 15706 HDFS Write: 299 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 150 msec
+OK
+1	Amit	100	DNA	1	UP
+2	Sumit	200	DNA	2	BIHAR
+3	Yadav	300	DNA	3	MP
+4	Sunil	500	FCS	4	AP
+5	Kranti	100	FCS	5	MAHARASHTRA
+6	Mahoor	200	FCS	6	GOA
+Time taken: 17.57 seconds, Fetched: 6 row(s)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM buck_users u JOIN buck_locations l
+    > ON u.id = l.id;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220415002536_e327c7f8-b3a8-4a2c-ac36-9f0d4c185b43
+Total jobs = 1
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/home/ubh01/apache-hive-2.3.2-bin/lib/log4j-slf4j-impl-2.6.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/ubh01/hadoop-2.7.1/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+2022-04-15 00:25:40	Starting to launch local task to process map join;	maximum memory = 477626368
+2022-04-15 00:25:41	Dump the side-table for tag: 1 with group count: 6 into file: file:/tmp/ubh01/1261a800-33c3-460f-b827-2a8024b3948f/hive_2022-04-15_00-25-36_092_6691214327140800682-1/-local-10004/HashTable-Stage-3/MapJoin-mapfile21--.hashtable
+2022-04-15 00:25:41	Uploaded 1 File to: file:/tmp/ubh01/1261a800-33c3-460f-b827-2a8024b3948f/hive_2022-04-15_00-25-36_092_6691214327140800682-1/-local-10004/HashTable-Stage-3/MapJoin-mapfile21--.hashtable (405 bytes)
+2022-04-15 00:25:41	End of local task; Time Taken: 1.085 sec.
+Execution completed successfully
+MapredLocal task succeeded
+Launching Job 1 out of 1
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1649832038027_0023, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0023/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0023
+Hadoop job information for Stage-3: number of mappers: 1; number of reducers: 0
+2022-04-15 00:25:45,532 Stage-3 map = 0%,  reduce = 0%
+2022-04-15 00:25:49,692 Stage-3 map = 100%,  reduce = 0%, Cumulative CPU 2.17 sec
+MapReduce Total cumulative CPU time: 2 seconds 170 msec
+Ended Job = job_1649832038027_0023
+MapReduce Jobs Launched: 
+Stage-Stage-3: Map: 1   Cumulative CPU: 2.17 sec   HDFS Read: 6933 HDFS Write: 299 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 170 msec
+OK
+2	Sumit	200	DNA	2	BIHAR
+4	Sunil	500	FCS	4	AP
+6	Mahoor	200	FCS	6	GOA
+1	Amit	100	DNA	1	UP
+3	Yadav	300	DNA	3	MP
+5	Kranti	100	FCS	5	MAHARASHTRA
+Time taken: 14.667 seconds, Fetched: 6 row(s)

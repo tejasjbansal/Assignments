@@ -1,0 +1,116 @@
+create table text_table
+(
+c1 int,
+c2 int,
+c3 int,
+c4 int
+)
+row format delimited
+fields terminated by '|';
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+load data local inpath '/home/ubh01/hive_files/ratings.dat'
+    > into table text_table;
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+Loading data to table default.text_table
+OK
+Time taken: 4.33 seconds
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+create table seq_table
+    > (
+    > c1 int,
+    > c2 int,
+    > c3 int,
+    > c4 int
+    > )
+    > stored as SEQUENCEFILE;
+OK
+Time taken: 0.267 seconds
+hive> create table rc_table
+    > (
+    > c1 int,
+    > c2 int,
+    > c3 int,
+    > c4 int
+    > )
+    > stored as RCFILE;
+OK
+Time taken: 0.107 seconds
+hive> create table prq_table
+    > (
+    > c1 int,
+    > c2 int,
+    > c3 int,
+    > c4 int
+    > )
+    > stored as PARQUET;
+OK
+Time taken: 0.086 seconds
+hive> create table orc_table
+    > (
+    > c1 int,
+    > c2 int,
+    > c3 int,
+    > c4 int
+    > )
+    > stored as ORC;
+OK
+Time taken: 0.153 seconds
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+FROM text_table
+    > INSERT OVERWRITE TABLE seq_table SELECT *
+    > INSERT OVERWRITE TABLE rc_table SELECT *
+    > INSERT OVERWRITE TABLE prq_table SELECT *
+    > INSERT OVERWRITE TABLE orc_table SELECT *;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220415001031_838e1150-a936-4983-a276-6b76b4382b44
+Total jobs = 5
+Launching Job 1 out of 5
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1649832038027_0017, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0017/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0017
+Hadoop job information for Stage-4: number of mappers: 1; number of reducers: 0
+2022-04-15 00:10:37,762 Stage-4 map = 0%,  reduce = 0%
+2022-04-15 00:10:46,259 Stage-4 map = 100%,  reduce = 0%, Cumulative CPU 8.23 sec
+MapReduce Total cumulative CPU time: 8 seconds 230 msec
+Ended Job = job_1649832038027_0017
+Stage-7 is selected by condition resolver.
+Stage-6 is filtered out by condition resolver.
+Stage-8 is filtered out by condition resolver.
+Stage-13 is selected by condition resolver.
+Stage-12 is filtered out by condition resolver.
+Stage-14 is filtered out by condition resolver.
+Stage-19 is selected by condition resolver.
+Stage-18 is filtered out by condition resolver.
+Stage-20 is filtered out by condition resolver.
+Stage-25 is selected by condition resolver.
+Stage-24 is filtered out by condition resolver.
+Stage-26 is filtered out by condition resolver.
+Moving data to directory hdfs://127.0.0.1:9000/user/hive/warehouse/seq_table/.hive-staging_hive_2022-04-15_00-10-31_367_908783907653791830-1/-ext-10000
+Moving data to directory hdfs://127.0.0.1:9000/user/hive/warehouse/rc_table/.hive-staging_hive_2022-04-15_00-10-31_367_908783907653791830-1/-ext-10002
+Moving data to directory hdfs://127.0.0.1:9000/user/hive/warehouse/prq_table/.hive-staging_hive_2022-04-15_00-10-31_367_908783907653791830-1/-ext-10004
+Moving data to directory hdfs://127.0.0.1:9000/user/hive/warehouse/orc_table/.hive-staging_hive_2022-04-15_00-10-31_367_908783907653791830-1/-ext-10006
+Loading data to table default.seq_table
+Loading data to table default.rc_table
+Loading data to table default.prq_table
+Loading data to table default.orc_table
+MapReduce Jobs Launched: 
+Stage-Stage-4: Map: 1   Cumulative CPU: 8.23 sec   HDFS Read: 24602255 HDFS Write: 24246187 SUCCESS
+Total MapReduce CPU Time Spent: 8 seconds 230 msec
+OK
+Time taken: 18.85 seconds
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+

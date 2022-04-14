@@ -1,0 +1,170 @@
+CREATE TABLE users
+              > (
+              > id INT,
+              > name STRING,
+              > salary INT,
+              > unit STRING
+              > )
+              > ROW FORMAT DELIMITED
+              > FIELDS TERMINATED BY '\t';
+OK
+Time taken: 0.08 seconds
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CREATE TABLE locations
+              > (
+              > id INT,
+              > location STRING
+              > )
+              > ROW FORMAT DELIMITED
+              > FIELDS TERMINATED BY '\t';
+OK
+Time taken: 0.085 seconds
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+LOAD DATA LOCAL INPATH '/home/ubh01/hive_files/users.txt'
+              > INTO TABLE users;
+Loading data to table default.users
+OK
+Time taken: 0.362 seconds
+hive (default)> LOAD DATA LOCAL INPATH '/home/ubh01/hive_files/locations.txt'
+              > INTO TABLE locations;
+Loading data to table default.locations
+OK
+Time taken: 0.32 seconds
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT unit, MAX(salary) FROM users
+              > GROUP BY unit;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220414231731_ebb24276-e22d-4c2d-bdff-222ceaeaba0f
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649832038027_0012, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0012/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0012
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-14 23:17:35,153 Stage-1 map = 0%,  reduce = 0%
+2022-04-14 23:17:39,334 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 0.96 sec
+2022-04-14 23:17:44,589 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.29 sec
+MapReduce Total cumulative CPU time: 2 seconds 290 msec
+Ended Job = job_1649832038027_0012
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 2.29 sec   HDFS Read: 8359 HDFS Write: 127 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 290 msec
+OK
+DNA	300
+FCS	500
+Time taken: 14.299 seconds, Fetched: 2 row(s)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT id, name, salary, rank FROM
+              > (
+              > SELECT id, name, salary, rank() OVER (PARTITION BY unit ORDER BY salary DESC) AS rank
+              > FROM users
+              > ) temp
+              > WHERE rank = 1;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220414231939_15ef9dc8-bbda-4795-b682-a537ab498e67
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649832038027_0013, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0013/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0013
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-14 23:19:42,903 Stage-1 map = 0%,  reduce = 0%
+2022-04-14 23:19:47,048 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 0.89 sec
+2022-04-14 23:19:52,281 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.26 sec
+MapReduce Total cumulative CPU time: 3 seconds 260 msec
+Ended Job = job_1649832038027_0013
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.26 sec   HDFS Read: 10622 HDFS Write: 139 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 260 msec
+OK
+3	Yadav	300	1
+4	Sunil	500	1
+Time taken: 14.221 seconds, Fetched: 2 row(s)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT name, salary, unit, rank 
+              > FROM
+              > (
+              > SELECT dense_rank() OVER (PARTITION BY unit ORDER BY salary DESC) AS rank, id, name, salary, unit
+              > FROM users
+              > ) temp
+              > WHERE rank <= 2;
+
+Total MapReduce CPU Time Spent: 3 seconds 350 msec
+OK
+Yadav	300	DNA	1
+Sumit	200	DNA	2
+Sunil	500	FCS	1
+Mahoor	200	FCS	2
+Time taken: 14.609 seconds, Fetched: 4 row(s)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT salary, LAG(salary) OVER (PARTITION BY unit ORDER BY salary)
+              > FROM users;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220414233104_1c25b06a-5384-446c-9734-044009021951
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649832038027_0016, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0016/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0016
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-14 23:31:08,471 Stage-1 map = 0%,  reduce = 0%
+2022-04-14 23:31:12,660 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.02 sec
+2022-04-14 23:31:19,021 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 2.93 sec
+MapReduce Total cumulative CPU time: 2 seconds 930 msec
+Ended Job = job_1649832038027_0016
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 2.93 sec   HDFS Read: 9522 HDFS Write: 205 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 930 msec
+OK
+100	NULL
+200	100
+300	200
+100	NULL
+200	100
+500	200
+Time taken: 15.275 seconds, Fetched: 6 row(s)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,42 @@
+CREATE TABLE csv_table(name string, location string)
+                 > ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+                 > WITH SERDEPROPERTIES (
+                 >     "separatorChar" = ",",
+                 >     "quoteChar"     = "\"",
+                 >     "escapeChar"    = "\\"
+                 > )
+                 > STORED AS TEXTFILE
+                 > TBLPROPERTIES ("skip.header.line.count"="1")
+                 > ;
+OK
+Time taken: 0.16 seconds
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+LOAD DATA LOCAL INPATH '/home/ubh01/hive_files/csv_file.csv'
+                 > INTO TABLE csv_table;
+Loading data to table ineuron_db.csv_table
+OK
+Time taken: 0.718 seconds
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+select * from csv_table;
+OK
+Amit	BBSR,India
+Sumit	MUM,India
+Time taken: 0.199 seconds, Fetched: 2 row(s)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hive (ineuron_db)> select location from csv_table;
+OK
+BBSR,India
+MUM,India
+Time taken: 0.175 seconds, Fetched: 2 row(s)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------

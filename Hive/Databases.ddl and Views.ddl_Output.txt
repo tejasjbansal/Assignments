@@ -1,0 +1,355 @@
+create database if not exists ineuron_db;
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+OK
+Time taken: 5.456 seconds
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+USE ineuron_db;
+OK
+Time taken: 0.058 seconds
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+DESCRIBE DATABASE ineuron_db;
+OK
+ineuron_db		hdfs://127.0.0.1:9000/user/hive/warehouse/ineuron_db.db	ubh01	USER	
+Time taken: 0.067 seconds, Fetched: 1 row(s)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+create table  emp_details2
+                 > (
+                 > emp_name int,
+                 > unit string,
+                 > exp int,
+                 > location string
+                 > )
+                 > row format delimited
+                 > fields terminated by ',';
+OK
+Time taken: 1.53 seconds
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+DESCRIBE emp_details2;
+OK
+emp_name            	int                 	                    
+unit                	string              	                    
+exp                 	int                 	                    
+location            	string              	                    
+Time taken: 0.319 seconds, Fetched: 4 row(s)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SHOW TABLES LIKE '*emp*';
+OK
+emp_details2
+Time taken: 0.064 seconds, Fetched: 1 row(s)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ALTER TABLE emp_details2 RENAME TO employee_details;
+OK
+Time taken: 0.297 seconds
+hive (ineuron_db)> SHOW TABLES LIKE '*emp*';
+OK
+employee_details
+Time taken: 0.059 seconds, Fetched: 1 row(s)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ALTER TABLE employee_details
+                 > CHANGE COLUMN emp_name emppp_name STRING
+                 > COMMENT 'Employee Name'
+                 > AFTER unit;
+OK
+Time taken: 0.323 seconds
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+DESCRIBE FORMATTED employee_details;
+OK
+# col_name            	data_type           	comment             
+	 	 
+unit                	string              	                    
+emppp_name          	string              	Employee Name       
+exp                 	int                 	                    
+location            	string              	                    
+	 	 
+# Detailed Table Information	 	 
+Database:           	ineuron_db          	 
+Owner:              	ubh01               	 
+CreateTime:         	Thu Apr 14 14:32:14 IST 2022	 
+LastAccessTime:     	UNKNOWN             	 
+Retention:          	0                   	 
+Location:           	hdfs://127.0.0.1:9000/user/hive/warehouse/ineuron_db.db/employee_details	 
+Table Type:         	MANAGED_TABLE       	 
+Table Parameters:	 	 
+	COLUMN_STATS_ACCURATE	{\"BASIC_STATS\":\"true\"}
+	last_modified_by    	ubh01               
+	last_modified_time  	1649927183          
+	numFiles            	0                   
+	numRows             	0                   
+	rawDataSize         	0                   
+	totalSize           	0                   
+	transient_lastDdlTime	1649927183          
+	 	 
+# Storage Information	 	 
+SerDe Library:      	org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe	 
+InputFormat:        	org.apache.hadoop.mapred.TextInputFormat	 
+OutputFormat:       	org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat	 
+Compressed:         	No                  	 
+Num Buckets:        	-1                  	 
+Bucket Columns:     	[]                  	 
+Sort Columns:       	[]                  	 
+Storage Desc Params:	 	 
+	field.delim         	,                   
+	serialization.format	,                   
+Time taken: 0.231 seconds, Fetched: 36 row(s)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+LOAD DATA LOCAL INPATH '/home/ubh01/hive_files/emp_details_tejash.txt' INTO TABLE employee_details;
+Loading data to table ineuron_db.employee_details
+OK
+Time taken: 1.396 seconds
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM emp_details;
+OK
+tejash	ops	10	blr
+yash	dev	10	pune
+rachit	secu	10	delhi
+naveen	bi	5	vish
+neeraj	ds	10	chi
+suresh	res	10	noida
+john	asd	10	sre
+ravi	cod	7	muz
+summit	asd	10	sou
+poll	bi	1	blr
+sunny	qwe	10	blr
+ramesh	ghj	3	qwe
+kavita	asd	4	blr
+	NULL	NULL	NULL
+Time taken: 0.374 seconds, Fetched: 14 row(s)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM emp_details WHERE exp >= 2;
+OK
+tejash	ops	10	blr
+yash	dev	10	pune
+rachit	secu	10	delhi
+naveen	bi	5	vish
+neeraj	ds	10	chi
+suresh	res	10	noida
+john	asd	10	sre
+ravi	cod	7	muz
+summit	asd	10	sou
+sunny	qwe	10	blr
+ramesh	ghj	3	qwe
+kavita	asd	4	blr
+Time taken: 0.806 seconds, Fetched: 12 row(s)
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT * FROM emp_details WHERE emp_name RLIKE '.*(mi|ni).*';
+OK
+summit	asd	10	sou
+Time taken: 0.255 seconds, Fetched: 1 row(s)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT location, COUNT(*) FROM emp_details GROUP BY location;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220414223628_b1a55d5e-cd35-40ac-9703-5404c18dfae0
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649832038027_0010, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0010/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0010
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-14 22:36:39,276 Stage-1 map = 0%,  reduce = 0%
+2022-04-14 22:36:44,738 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.15 sec
+2022-04-14 22:36:52,359 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 4.86 sec
+MapReduce Total cumulative CPU time: 4 seconds 860 msec
+Ended Job = job_1649832038027_0010
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 4.86 sec   HDFS Read: 8575 HDFS Write: 290 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 860 msec
+OK
+NULL	1
+blr	4
+chi	1
+delhi	1
+muz	1
+noida	1
+pune	1
+qwe	1
+sou	1
+sre	1
+vish	1
+Time taken: 25.435 seconds, Fetched: 11 row(s)
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+SELECT location, COUNT(*) FROM emp_details
+                 > GROUP BY location
+                 > HAVING AVG(exp) > 1.5;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = ubh01_20220414223820_64e72d34-6bb1-4d8c-8c5d-8f82a6b2a80f
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649832038027_0011, Tracking URL = http://ubh01:8088/proxy/application_1649832038027_0011/
+Kill Command = /home/ubh01/hadoop-2.7.1/bin/hadoop job  -kill job_1649832038027_0011
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-14 22:38:27,501 Stage-1 map = 0%,  reduce = 0%
+2022-04-14 22:38:34,080 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.92 sec
+2022-04-14 22:38:42,887 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 6.13 sec
+MapReduce Total cumulative CPU time: 6 seconds 130 msec
+Ended Job = job_1649832038027_0011
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 6.13 sec   HDFS Read: 10266 HDFS Write: 273 SUCCESS
+Total MapReduce CPU Time Spent: 6 seconds 130 msec
+OK
+blr	4
+chi	1
+delhi	1
+muz	1
+noida	1
+pune	1
+qwe	1
+sou	1
+sre	1
+vish	1
+Time taken: 23.184 seconds, Fetched: 10 row(s)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+EXPLAIN SELECT * FROM emp_details;
+OK
+STAGE DEPENDENCIES:
+  Stage-0 is a root stage
+
+STAGE PLANS:
+  Stage: Stage-0
+    Fetch Operator
+      limit: -1
+      Processor Tree:
+        TableScan
+          alias: emp_details
+          Statistics: Num rows: 1 Data size: 225 Basic stats: COMPLETE Column stats: NONE
+          Select Operator
+            expressions: emp_name (type: string), unit (type: string), exp (type: int), location (type: string)
+            outputColumnNames: _col0, _col1, _col2, _col3
+            Statistics: Num rows: 1 Data size: 225 Basic stats: COMPLETE Column stats: NONE
+            ListSink
+
+Time taken: 0.294 seconds, Fetched: 17 row(s)
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+DROP TABLE emp_details;
+OK
+Time taken: 0.278 seconds
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+create external table complex_data_type_new
+                 > (
+                 > emp_id int,
+                 > name map<string, string>,
+                 > location struct<city:string, pin:int>,
+                 > skill_set array<string>
+                 > )
+                 > row format delimited fields terminated by '\t'               
+                 > collection items terminated by ','
+                 > map keys terminated by ':'
+                 > tblproperties ("skip.header.line.count"="1");
+OK
+Time taken: 0.187 seconds
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+LOAD DATA LOCAL INPATH '/home/ubh01/hive_files/complex_data_type.txt'
+                 > INTO TABLE complex_data_type_new;
+Loading data to table ineuron_db.complex_data_type_new
+OK
+Time taken: 0.718 seconds
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT emp_id, name, location, skill_set FROM complex_data_type_new;
+OK
+101	{"first":"Amit","last":"Mishra"}	{"city":"bbsr","pin":751024}	["Hadoop","Hive"]
+102	{"first":"Aditya","last":"Kulkarni"}	{"city":"bnglr","pin":123412}	["Hadoop","Hive","Oracle"]
+Time taken: 0.206 seconds, Fetched: 2 row(s)
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+SELECT emp_id, name['first'], location.city, skill_set[0] FROM complex_data_type_new;
+OK
+101	Amit	bbsr	Hadoop
+102	Aditya	bnglr	Hadoop
+Time taken: 0.214 seconds, Fetched: 2 row(s)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,16 @@
+SELECT * FROM userlog;
+OK
+host1	amit	gmail
+host2	sumit	facebook
+host3	raghav	gmail
+host4	rohit	gmail
+Time taken: 1.946 seconds, Fetched: 4 row(s)
+
+
+SELECT host, user_name FROM userlog;
+OK
+host1	amit
+host2	sumit
+host3	raghav
+host4	rohit
+Time taken: 0.213 seconds, Fetched: 4 row(s)

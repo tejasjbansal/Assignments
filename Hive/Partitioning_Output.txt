@@ -1,0 +1,78 @@
+---------------------------------------------------------------------------------------------------------------------------
+Static Partitions
+-----------------------------------------------------------------------------------------------------------------------------
+hdfs dfs -ls /user/hive/warehouse/emp_details_partitioned
+Found 1 items
+drwxrwxrwx   - cloudera hive          0 2022-04-08 09:59 /user/hive/warehouse/emp_details_partitioned/location=pune
+[cloudera@quickstart txtfiles]$ hdfs dfs -ls /user/hive/warehouse/emp_details_partitioned/location=pune
+Found 1 items
+-rwxrwxrwx   1 cloudera hive         38 2022-04-08 09:59 /user/hive/warehouse/emp_details_partitioned/location=pune/000000_0
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+Dynamic Partitions
+-------------------------------------------------------------------------------------------------------------------------------
+hdfs dfs -ls /user/hive/warehouse/emp_details_partitioned/
+Found 3 items
+drwxrwxrwx   - cloudera hive          0 2022-04-08 10:05 /user/hive/warehouse/emp_details_partitioned/location=bang
+drwxrwxrwx   - cloudera hive          0 2022-04-08 10:05 /user/hive/warehouse/emp_details_partitioned/location=pune
+drwxrwxrwx   - cloudera hive          0 2022-04-08 10:05 /user/hive/warehouse/emp_details_partitioned/location=sre
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+select count(*) from emp_details where location='pune';
+
+Query ID = cloudera_20220408101010_6d952493-ed61-4804-99b2-9f5dfa1c5180
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649343435305_0011, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1649343435305_0011/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1649343435305_0011
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-08 10:10:35,587 Stage-1 map = 0%,  reduce = 0%
+2022-04-08 10:11:17,313 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 6.34 sec
+2022-04-08 10:11:37,533 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 11.51 sec
+MapReduce Total cumulative CPU time: 11 seconds 510 msec
+Ended Job = job_1649343435305_0011
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 11.51 sec   HDFS Read: 7508 HDFS Write: 2 SUCCESS
+Total MapReduce CPU Time Spent: 11 seconds 510 msec
+OK
+3
+Time taken: 96.908 seconds, Fetched: 1 row(s)
+---------------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------------
+select count(*) from emp_details where emp_name='tejash';
+
+Query ID = cloudera_20220408101717_e56874b3-5020-4e0e-8820-c7ba8a1208db
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1649343435305_0012, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1649343435305_0012/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1649343435305_0012
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2022-04-08 10:18:08,374 Stage-1 map = 0%,  reduce = 0%
+2022-04-08 10:18:37,248 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 6.67 sec
+2022-04-08 10:18:57,596 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 12.0 sec
+MapReduce Total cumulative CPU time: 12 seconds 0 msec
+Ended Job = job_1649343435305_0012
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 12.0 sec   HDFS Read: 7512 HDFS Write: 2 SUCCESS
+Total MapReduce CPU Time Spent: 12 seconds 0 msec
+OK
+1
+Time taken: 78.872 seconds, Fetched: 1 row(s)
+---------------------------------------------------------------------------------------------------------------------------------

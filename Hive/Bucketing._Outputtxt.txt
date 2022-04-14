@@ -1,0 +1,14 @@
+-----------------------------------------------------------------------------------------------------------
+hdfs dfs -ls /user/hive/warehouse/buck_locations
+Found 2 items
+-rwxrwxrwx   1 cloudera hive         19 2022-04-08 10:24 /user/hive/warehouse/buck_locations/000000_0
+-rwxrwxrwx   1 cloudera hive         36 2022-04-08 10:24 /user/hive/warehouse/buck_locations/000001_0
+
+-----------------------------------------------------------------------------------------------------------
+
+[cloudera@quickstart txtfiles]$ hdfs dfs -ls /user/hive/warehouse/buck_users
+Found 2 items
+-rwxrwxrwx   1 cloudera hive         67 2022-04-08 10:23 /user/hive/warehouse/buck_users/000000_0
+-rwxrwxrwx   1 cloudera hive         48 2022-04-08 10:23 /user/hive/warehouse/buck_users/000001_0
+
+------------------------------------------------------------------------------------------------------------
